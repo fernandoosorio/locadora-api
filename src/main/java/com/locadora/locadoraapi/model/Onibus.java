@@ -1,7 +1,11 @@
 package com.locadora.locadoraapi.model;
 
-public class Onibus extends Veiculo{
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 
+@Entity
+public class Onibus extends Veiculo{
+    @Column   
     private int capacidadePassageiros;
 
     @Override

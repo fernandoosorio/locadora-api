@@ -1,7 +1,11 @@
 package com.locadora.locadoraapi.model;
 
-public class Moto extends Veiculo{
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 
+@Entity
+public class Moto extends Veiculo{
+    @Column   
     private int cilindrada;
 
     @Override

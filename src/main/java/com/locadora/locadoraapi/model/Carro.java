@@ -1,11 +1,17 @@
 package com.locadora.locadoraapi.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
+
+@Entity
 public class Carro  extends Veiculo{
 
-    public final int PASSEIO = 1;
-	public final int SUV = 2;
-    public final int PICKUP = 3;
-
+    @Transient public static final int PASSEIO = 1;
+	@Transient public static final int SUV = 2;
+    @Transient public static final int PICKUP = 3;
+    
+    @Column
     private int tipo;
 
 	public int getTipo() {
