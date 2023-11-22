@@ -20,3 +20,5 @@ Escolher o arquivo application.properties e configurar o banco de dados.
 Criar um banco de dados chamado locadora ( o esquema será gerado via JPA)
 
 Executar o projeto ( executar/debugar o arquivo LocadoraApiApplication.java)
+
+Se tudo ocorreu conforme orientado, as tabelas do banco terão sido criadas.
