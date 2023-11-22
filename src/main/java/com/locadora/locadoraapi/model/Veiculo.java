@@ -11,7 +11,7 @@ public abstract class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id; 
+    private Long id; 
     @Column   
     protected String marca;
     @Column   
@@ -77,6 +77,14 @@ public abstract class Veiculo {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
    
     
