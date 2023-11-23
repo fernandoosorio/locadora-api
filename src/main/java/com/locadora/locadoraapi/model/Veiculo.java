@@ -1,13 +1,16 @@
 package com.locadora.locadoraapi.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
-@MappedSuperclass
-public abstract class Veiculo {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Veiculo implements VeiculoInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +28,18 @@ public abstract class Veiculo {
     @Column
 	protected String placa;
 
-    public abstract double seguro();
+    public Veiculo(String marca, String modelo, int anoDeFabricacao, double valorDoBem, double valorDiaria, String placa) {
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anoDeFabricacao = anoDeFabricacao;
+        this.valorDoBem = valorDoBem;
+        this.valorDiaria = valorDiaria;
+        this.placa = placa;
+    }
+
+    public Veiculo() {
+    }
+
 	
 	public double aluguel(int dias) {
 		return (this.valorDiaria + this.seguro()) * dias;
@@ -85,6 +99,11 @@ public abstract class Veiculo {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public double seguro() {
+       return 0;
     }
    
     
