@@ -28,7 +28,6 @@ public class LocadoraImplController implements Locadora {
 
     @Override
     public ResponseEntity<Veiculo> inserir(@RequestBody VeiculoDto v) throws VeiculoJaCadastrado, SQLException {
-
         return ResponseEntity.ok ( this.veiculoService.inserirVeiculo(v.toVeiculo()) );
     }
 
@@ -39,33 +38,40 @@ public class LocadoraImplController implements Locadora {
     }
 
     @Override
-    public Veiculo pesquisar(String placa) throws VeiculoNaoCadastrado {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pesquisar'");
+    public ResponseEntity<Veiculo> pesquisar(String placa) throws VeiculoNaoCadastrado {
+        Veiculo  v = this.veiculoService.getVeiculoByPlaca(placa);
+        if( v == null )
+            throw new VeiculoNaoCadastrado();
+      
+        return ResponseEntity.ok ( v  );
     }
 
     @Override
-    public ArrayList<Veiculo> pesquisarMoto(int cilindrada) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pesquisarMoto'");
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarMoto(int cilindrada) {
+        ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+        veiculos.addAll( this.veiculoService.getVeiculoByCilindrada(cilindrada) );
+        return ResponseEntity.ok (veiculos );
     }
 
     @Override
-    public ArrayList<Veiculo> pesquisarCarro(int tipoCarro) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pesquisarCarro'");
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarCarro(int tipoCarro) {
+        ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+        veiculos.addAll( this.veiculoService.getVeiculoByTipoCarro(tipoCarro) );
+        return ResponseEntity.ok (veiculos );
     }
 
     @Override
-    public ArrayList<Veiculo> pesquisarCaminhao(int carga) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pesquisarCaminhao'");
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarCaminhao(int carga) {
+        ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+        veiculos.addAll( this.veiculoService.getVeiculoByCarga(carga) );
+        return ResponseEntity.ok (veiculos );
     }
 
     @Override
-    public ArrayList<Veiculo> pesquisarOnibus(int passageiros) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pesquisarOnibus'");
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarOnibus(int passageiros) {
+        ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
+        veiculos.addAll( this.veiculoService.getVeiculoByPassageiros(passageiros) );
+        return ResponseEntity.ok (veiculos );
     }
 
     @Override
@@ -111,22 +117,5 @@ public class LocadoraImplController implements Locadora {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'quantidadeTotalDeDiarias'");
     }
-
-    
-
-//     @Autowired
-//     private VeiculoService veiculoService;
-
-//     @GetMapping
-//     public ResponseEntity<?> getAllVeiculos(){
-//         return  ResponseEntity.ok( "Retorno ok" ) ;
-//     }
-
-//     @GetMapping("/{id}")
-//     public ResponseEntity<Veiculo> getVeiculoById(@PathVariable String id){
-//         return  ResponseEntity.ok( veiculoService.getVeiculo(id) ) ;
-//   }
-
-
     
 }

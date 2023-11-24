@@ -10,7 +10,7 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Veiculo implements VeiculoInterface {
+public abstract class  Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +39,8 @@ public class Veiculo implements VeiculoInterface {
 
     public Veiculo() {
     }
+
+    public abstract double seguro();
 
 	
 	public double aluguel(int dias) {
@@ -99,11 +101,6 @@ public class Veiculo implements VeiculoInterface {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public double seguro() {
-       return 0;
     }
    
     

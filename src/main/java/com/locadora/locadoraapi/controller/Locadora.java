@@ -31,19 +31,19 @@ public interface Locadora {
     public void inserir(@RequestBody  Cliente c) throws ClienteJaCadastrado, SQLException;
 
 	@GetMapping("/pesquisar/veiculoByPlaca/{placa}") 
-    public Veiculo pesquisar(@PathVariable String placa) throws VeiculoNaoCadastrado; 
+    public ResponseEntity<Veiculo> pesquisar(@PathVariable String placa) throws VeiculoNaoCadastrado; 
 
     @GetMapping("/pesquisar/motoByCilindrada/{cilindrada}") 
-    public ArrayList<Veiculo> pesquisarMoto(@PathVariable int cilindrada);
-	// tipo de carro 1 (passeio), 2 (SUC), 3 (pickup)
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarMoto(@PathVariable int cilindrada);
+	// tipo de carro 1 (passeio), 2 (SUV), 3 (pickup)
     @GetMapping("/pesquisar/carroByTipoCarro/{tipoCarro}") 
-    public ArrayList<Veiculo> pesquisarCarro(@PathVariable int tipoCarro);
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarCarro(@PathVariable int tipoCarro);
 
     @GetMapping("/pesquisar/caminhaoByCarga/{carga}") 
-    public ArrayList<Veiculo> pesquisarCaminhao(@PathVariable int carga);
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarCaminhao(@PathVariable int carga);
 
-    @GetMapping("/pesquisar/onibusByPassageiros/{placa}") 
-    public ArrayList<Veiculo> pesquisarOnibus(@PathVariable int passageiros);
+    @GetMapping("/pesquisar/onibusByPassageiros/{passageiros}") 
+    public ResponseEntity< ArrayList<Veiculo> > pesquisarOnibus(@PathVariable int passageiros);
     
     //Seguro Moto = (valor do bem * 11%)/365
    	//Seguro Carro = (valor do bem * 3%)/365
