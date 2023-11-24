@@ -19,6 +19,7 @@ import com.locadora.locadoraapi.exception.VeiculoNaoAlugado;
 import com.locadora.locadoraapi.exception.VeiculoNaoCadastrado;
 import com.locadora.locadoraapi.model.Cliente;
 import com.locadora.locadoraapi.model.Veiculo;
+import com.locadora.locadoraapi.model.DTO.ClienteDTO;
 import com.locadora.locadoraapi.model.DTO.VeiculoDto;
 
 @RequestMapping("/locadora")
@@ -28,7 +29,7 @@ public interface Locadora {
     public  ResponseEntity<Veiculo> inserir(@RequestBody  VeiculoDto v) throws VeiculoJaCadastrado, SQLException;
 
 	@PostMapping("/crete/cliente") 
-    public void inserir(@RequestBody  Cliente c) throws ClienteJaCadastrado, SQLException;
+    public ResponseEntity<Cliente> inserir(@RequestBody  ClienteDTO c) throws ClienteJaCadastrado, SQLException;
 
 	@GetMapping("/pesquisar/veiculoByPlaca/{placa}") 
     public ResponseEntity<Veiculo> pesquisar(@PathVariable String placa) throws VeiculoNaoCadastrado; 

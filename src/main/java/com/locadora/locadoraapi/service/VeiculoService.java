@@ -17,7 +17,7 @@ public class VeiculoService {
     private VeiculoRepository repositorio;
 
 
-    public Veiculo inserirVeiculo(Veiculo  v) {
+    public Veiculo inserir(Veiculo  v) {
 
         if( repositorio.encontrarPelaPlaca(v.getPlaca()) != null)
             throw new VeiculoJaCadastrado();

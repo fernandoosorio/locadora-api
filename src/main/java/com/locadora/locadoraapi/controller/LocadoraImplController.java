@@ -17,8 +17,11 @@ import com.locadora.locadoraapi.exception.VeiculoNaoAlugado;
 import com.locadora.locadoraapi.exception.VeiculoNaoCadastrado;
 import com.locadora.locadoraapi.model.Cliente;
 import com.locadora.locadoraapi.model.Veiculo;
+import com.locadora.locadoraapi.model.DTO.ClienteDTO;
 import com.locadora.locadoraapi.model.DTO.VeiculoDto;
+import com.locadora.locadoraapi.service.ClienteService;
 import com.locadora.locadoraapi.service.VeiculoService;
+
 
 @RestController
 public class LocadoraImplController implements Locadora {
@@ -26,15 +29,17 @@ public class LocadoraImplController implements Locadora {
     @Autowired
     private VeiculoService veiculoService;
 
+     @Autowired
+    private ClienteService clienteService;
+
     @Override
     public ResponseEntity<Veiculo> inserir(@RequestBody VeiculoDto v) throws VeiculoJaCadastrado, SQLException {
-        return ResponseEntity.ok ( this.veiculoService.inserirVeiculo(v.toVeiculo()) );
+        return ResponseEntity.ok ( this.veiculoService.inserir(v.toVeiculo()) );
     }
 
     @Override
-    public void inserir(@RequestBody  Cliente c) throws ClienteJaCadastrado, SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inserir'");
+    public ResponseEntity<Cliente> inserir(@RequestBody  ClienteDTO c) throws ClienteJaCadastrado, SQLException {
+        return ResponseEntity.ok ( this.clienteService.inserir(c.toCliente()) );
     }
 
     @Override

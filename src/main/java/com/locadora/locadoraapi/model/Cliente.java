@@ -17,8 +17,20 @@ public class Cliente {
     private int cpf;
     @Column
     private String nome;
+    @Column
+    private String telefone;
+    @Column
+    private String email;
 
     public Cliente() {
+    }
+
+    //criar construtor com todos os atributos
+    public Cliente(String nome, int cpf,  String telefone, String email) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
     }
 
     public Long getId() {
@@ -43,4 +55,22 @@ public class Cliente {
     public String getNome() {
         return nome;
     }
+
+
+    public String getTelefone() {
+        return this.telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 }
