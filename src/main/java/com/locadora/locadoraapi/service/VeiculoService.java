@@ -1,13 +1,11 @@
 package com.locadora.locadoraapi.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.locadora.locadoraapi.exception.VeiculoJaCadastrado;
-import com.locadora.locadoraapi.model.Moto;
 import com.locadora.locadoraapi.model.Veiculo;
 import com.locadora.locadoraapi.model.helpers.TipoCarroEnum;
 import com.locadora.locadoraapi.repository.VeiculoRepository;
