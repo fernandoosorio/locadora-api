@@ -1,11 +1,15 @@
 package com.locadora.locadoraapi.service;
 
 import java.util.Collection;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.locadora.locadoraapi.exception.VeiculoJaCadastrado;
+import com.locadora.locadoraapi.exception.VeiculoNaoCadastrado;
 import com.locadora.locadoraapi.model.Veiculo;
 import com.locadora.locadoraapi.model.helpers.TipoCarroEnum;
 import com.locadora.locadoraapi.repository.VeiculoRepository;
@@ -26,8 +30,10 @@ public class VeiculoService {
     }
 
 
-    public Veiculo getVeiculoByPlaca(String placa) {
-        return repositorio.encontrarPelaPlaca(placa);
+    public Veiculo getVeiculoByPlaca(String placa)  {
+
+        return Optional.ofNullable( repositorio.encontrarPelaPlaca(placa) )
+            .orElseThrow( () -> new VeiculoNaoCadastrado() );
     }
 
 
