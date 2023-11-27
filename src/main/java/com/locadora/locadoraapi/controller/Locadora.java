@@ -25,10 +25,10 @@ import com.locadora.locadoraapi.model.DTO.VeiculoDto;
 @RequestMapping("/locadora")
 public interface Locadora {
 
-    @PostMapping("/crete/veiculo") 
+    @PostMapping("/create/veiculo") 
     public  ResponseEntity<Veiculo> inserir(@RequestBody  VeiculoDto v) throws VeiculoJaCadastrado, SQLException;
 
-	@PostMapping("/crete/cliente") 
+	@PostMapping("/create/cliente") 
     public ResponseEntity<Cliente> inserir(@RequestBody  ClienteDTO c) throws ClienteJaCadastrado, SQLException;
 
 	@GetMapping("/pesquisar/veiculoByPlaca/{placa}") 

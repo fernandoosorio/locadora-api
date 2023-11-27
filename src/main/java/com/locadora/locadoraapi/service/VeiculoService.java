@@ -3,8 +3,6 @@ package com.locadora.locadoraapi.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,7 @@ public class VeiculoService {
     private VeiculoRepository repositorio;
 
 
-    public Veiculo inserir(Veiculo  v) {
+    public Veiculo inserir(Veiculo  v)  throws VeiculoJaCadastrado {
 
         if( repositorio.encontrarPelaPlaca(v.getPlaca()) != null)
             throw new VeiculoJaCadastrado();
