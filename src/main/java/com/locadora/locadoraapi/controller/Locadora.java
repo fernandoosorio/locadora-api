@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,10 +56,10 @@ public interface Locadora {
     public double calcularAluguel(@PathVariable String placa,@PathVariable int dias) throws VeiculoNaoCadastrado;
     
     @PostMapping("create/aluguel/{placa}/{data}/{dias}/{cpf}") 
-    public void registrarAluguel(@PathVariable String placa,@PathVariable Date data,@PathVariable int dias,@PathVariable int cpf) throws VeiculoNaoCadastrado, VeiculoAlugado, ClienteNaoCadastrado;
+    public void registrarAluguel(@PathVariable String placa, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date data,@PathVariable int dias,@PathVariable Long cpf) throws VeiculoNaoCadastrado, VeiculoAlugado, ClienteNaoCadastrado;
    
     @GetMapping("/registrar-devolucao/{placa}/{data}/{cpf}") 
-    public void registrarDevolucao(@PathVariable String placa, @PathVariable Date data,@PathVariable int cpf) throws VeiculoNaoCadastrado, VeiculoNaoAlugado, ClienteNaoCadastrado;
+    public void registrarDevolucao(@PathVariable String placa, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date data,@PathVariable Long cpf) throws VeiculoNaoCadastrado, VeiculoNaoAlugado, ClienteNaoCadastrado;
    
 	// tipo de veiculo
 	// 0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)

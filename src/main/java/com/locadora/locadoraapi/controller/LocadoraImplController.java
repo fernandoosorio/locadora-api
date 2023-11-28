@@ -85,19 +85,17 @@ public class LocadoraImplController implements Locadora {
     }
 
     @Override
-    public void registrarAluguel(String placa, Date data, int dias, int cpf)
+    public void registrarAluguel(String placa, Date data, int dias, Long cpf)
             throws VeiculoNaoCadastrado, VeiculoAlugado, ClienteNaoCadastrado {
-         Veiculo  veiculo = Optional.ofNullable( this.veiculoService.getVeiculoByPlaca(placa) )
-            .orElseThrow( () -> new VeiculoNaoCadastrado() );
-        throw new UnsupportedOperationException("Unimplemented method 'registrarAluguel'");
+        
+        this.veiculoService.registrarAluguel(placa, data, dias, cpf);
     }
 
     @Override
-    public void registrarDevolucao(String placa, Date data, int cpf)
+    public void registrarDevolucao(String placa, Date data, Long cpf)
             throws VeiculoNaoCadastrado, VeiculoNaoAlugado, ClienteNaoCadastrado {
-        Veiculo  veiculo = Optional.ofNullable( this.veiculoService.getVeiculoByPlaca(placa) )
-            .orElseThrow( () -> new VeiculoNaoCadastrado() );
-        throw new UnsupportedOperationException("Unimplemented method 'registrarDevolucao'");
+        
+        this.veiculoService.registrarDevolucao(placa, data, cpf);
     }
 
     @Override
