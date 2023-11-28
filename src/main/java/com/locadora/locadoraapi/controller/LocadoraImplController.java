@@ -100,7 +100,9 @@ public class LocadoraImplController implements Locadora {
 
     @Override
     public void depreciarVeiculos(int tipo, double taxaDepreciacao) {
-        throw new UnsupportedOperationException("Unimplemented method 'depreciarVeiculos'");
+        if( taxaDepreciacao < 0 || taxaDepreciacao > 100)
+            throw new IllegalArgumentException("Taxa de depreciacao deve ser entre 0 e 100");
+        this.veiculoService.depreciarVeiculos(tipo,taxaDepreciacao);
     }
 
     @Override

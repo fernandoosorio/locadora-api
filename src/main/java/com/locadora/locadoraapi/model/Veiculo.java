@@ -102,6 +102,10 @@ public abstract class  Veiculo {
     public void setId(Long id) {
         this.id = id;
     }
-   
-    
+
+    public void depreciar(double taxaDepreciacao) {
+        this.valorDoBem = this.valorDoBem - (this.valorDoBem * taxaDepreciacao/100);
+    }
+
+       
 }

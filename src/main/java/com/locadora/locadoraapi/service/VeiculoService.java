@@ -122,5 +122,26 @@ public class VeiculoService {
         
         return aluguel;
     }
+
+
+    public void depreciarVeiculos(int tipo, double taxaDepreciacao) {
+
+       
+
+        if(tipo == 0){
+            this.repositorio.findAll().forEach( (veiculo) -> {
+                veiculo.depreciar(taxaDepreciacao);
+                this.repositorio.save(veiculo);
+            });
+
+        }else{
+            TipoCarroEnum tipoCarro = TipoCarroEnum.values()[tipo-1]; // 1 - passeio, 2 - SUV, 3 - pickup, subtrai-se um pois o indice inicia em zero
+            this.repositorio.findByTipo(tipoCarro).forEach( (veiculo) -> {
+                veiculo.depreciar(taxaDepreciacao);
+                this.repositorio.save(veiculo);
+        });
+        }
+        
+    }
     
 }

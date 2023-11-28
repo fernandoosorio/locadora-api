@@ -23,6 +23,8 @@ import com.locadora.locadoraapi.model.Veiculo;
 import com.locadora.locadoraapi.model.DTO.ClienteDTO;
 import com.locadora.locadoraapi.model.DTO.VeiculoDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RequestMapping("/locadora")
 public interface Locadora {
 
@@ -63,6 +65,8 @@ public interface Locadora {
    
 	// tipo de veiculo
 	// 0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)
+    @Operation(summary = "Calcula a depreciação de todos os veículos de um determinado tipo", 
+    description = "Calcula a depreciação de todos os veículos de um determinado tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)")
     @GetMapping("/calcular/depreciarVeiculos/{tipo}/{taxaDepreciacao}") 
     public void depreciarVeiculos(@PathVariable int tipo,@PathVariable  double taxaDepreciacao);
     @GetMapping("/calcular/aumentarDiaria/{tipo}/{taxaAumento}") 
