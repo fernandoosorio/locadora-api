@@ -14,7 +14,7 @@ public class Cliente {
     private Long id; 
 
     @Column
-    private int cpf;
+    private Long cpf;
     @Column
     private String nome;
     @Column
@@ -26,7 +26,7 @@ public class Cliente {
     }
 
     //criar construtor com todos os atributos
-    public Cliente(String nome, int cpf,  String telefone, String email) {
+    public Cliente(String nome, Long cpf,  String telefone, String email) {
         this.cpf = cpf;
         this.nome = nome;
         this.telefone = telefone;
@@ -41,10 +41,10 @@ public class Cliente {
         this.id = id;
     }
 
-    public int getCpf() {
+    public Long getCpf() {
         return cpf;
     }
-    public void setCpf(int cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
 

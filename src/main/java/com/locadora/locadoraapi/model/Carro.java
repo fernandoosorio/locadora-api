@@ -1,5 +1,6 @@
 package com.locadora.locadoraapi.model;
 
+import com.locadora.locadoraapi.model.helpers.PorcentagemSeguro;
 import com.locadora.locadoraapi.model.helpers.TipoCarroEnum;
 
 import jakarta.persistence.Entity;
@@ -30,7 +31,7 @@ public class Carro  extends Veiculo {
 
     @Override
     public double seguro() {
-        return (getValorDoBem()*0.03)/365;
+        return (getValorDoBem()* PorcentagemSeguro.CARRO)/365;
     }
     
 }

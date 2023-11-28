@@ -1,5 +1,7 @@
 package com.locadora.locadoraapi.model;
 
+import com.locadora.locadoraapi.model.helpers.PorcentagemSeguro;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -18,7 +20,7 @@ public class Onibus extends Veiculo {
 
     @Override
     public double seguro() {
-        return (getValorDoBem()*0.2)/365;
+        return (getValorDoBem()*PorcentagemSeguro.ONIBUS)/365;
     }
 
     public int getCapacidadePassageiros() {

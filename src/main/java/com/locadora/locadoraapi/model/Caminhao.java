@@ -1,5 +1,7 @@
 package com.locadora.locadoraapi.model;
 
+import com.locadora.locadoraapi.model.helpers.PorcentagemSeguro;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -17,7 +19,7 @@ public class Caminhao extends Veiculo {
     }
     @Override
     public double seguro() {
-        return (getValorDoBem()*0.08)/365;
+        return (getValorDoBem()*PorcentagemSeguro.CAMINHAO)/365;
     }
 
     public int getCarga() {

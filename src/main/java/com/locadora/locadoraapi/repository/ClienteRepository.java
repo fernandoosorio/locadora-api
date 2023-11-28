@@ -9,7 +9,7 @@ import com.locadora.locadoraapi.model.Cliente;
 
 public interface ClienteRepository  extends JpaRepository<Cliente, Long>{
         
-        Cliente findByCpf(int cpf);
+        Cliente findByCpf(Long cpf);
         ArrayList<Cliente> findByNomeIgnoreCase(String nome);
  
     

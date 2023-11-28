@@ -19,18 +19,18 @@ public class VeiculoService {
     private VeiculoRepository repositorio;
 
 
-    public Veiculo inserir(Veiculo  v)  throws VeiculoJaCadastrado {
+    public Veiculo inserir(Veiculo  veiculo)  throws VeiculoJaCadastrado {
 
-        if( repositorio.encontrarPelaPlaca(v.getPlaca()) != null)
+        if( repositorio.findByPlaca(veiculo.getPlaca()) != null)
             throw new VeiculoJaCadastrado();
         
-        return repositorio.save(v);
+        return repositorio.save(veiculo);
     }
 
 
     public Veiculo getVeiculoByPlaca(String placa)  {
 
-        return Optional.ofNullable( repositorio.encontrarPelaPlaca(placa) )
+        return Optional.ofNullable( repositorio.findByPlaca(placa) )
             .orElseThrow( () -> new VeiculoNaoCadastrado() );
     }
 
@@ -52,6 +52,14 @@ public class VeiculoService {
 
     public Collection<? extends Veiculo> getVeiculoByPassageiros(int passageiros) {
          return repositorio.findByCapacidadePassageiros(passageiros);
+    }
+
+    public double getValorTotalAluguel(String placa, int dias) {
+        Veiculo  veiculo = Optional.ofNullable( this.repositorio.findByPlaca(placa) )
+        .orElseThrow( () -> new VeiculoNaoCadastrado() );
+
+
+        return veiculo.aluguel(dias);
     }
     
 }

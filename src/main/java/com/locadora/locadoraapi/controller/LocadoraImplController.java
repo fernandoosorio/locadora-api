@@ -3,6 +3,7 @@ package com.locadora.locadoraapi.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,22 +34,21 @@ public class LocadoraImplController implements Locadora {
     private ClienteService clienteService;
 
     @Override
-    public ResponseEntity<Veiculo> inserir(@RequestBody VeiculoDto v) throws VeiculoJaCadastrado, SQLException {
-        return ResponseEntity.ok ( this.veiculoService.inserir(v.toVeiculo()) );
+    public ResponseEntity<Veiculo> inserir(@RequestBody VeiculoDto veiculoDto) throws VeiculoJaCadastrado, SQLException {
+        return ResponseEntity.ok ( this.veiculoService.inserir(veiculoDto.toVeiculo()) );
     }
 
     @Override
-    public ResponseEntity<Cliente> inserir(@RequestBody  ClienteDTO c) throws ClienteJaCadastrado, SQLException {
-        return ResponseEntity.ok ( this.clienteService.inserir(c.toCliente()) );
+    public ResponseEntity<Cliente> inserir(@RequestBody  ClienteDTO clienteDTO) throws ClienteJaCadastrado, SQLException {
+        return ResponseEntity.ok ( this.clienteService.inserir(clienteDTO.toCliente()) );
     }
 
     @Override
     public ResponseEntity<Veiculo> pesquisar(String placa) throws VeiculoNaoCadastrado {
-        Veiculo  v = this.veiculoService.getVeiculoByPlaca(placa);
-        if( v == null )
-            throw new VeiculoNaoCadastrado();
+        Veiculo  veiculo = Optional.ofNullable( this.veiculoService.getVeiculoByPlaca(placa) )
+            .orElseThrow( () -> new VeiculoNaoCadastrado() );
       
-        return ResponseEntity.ok ( v  );
+        return ResponseEntity.ok ( veiculo  );
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LocadoraImplController implements Locadora {
     }
 
     @Override
-    public ResponseEntity< ArrayList<Veiculo> > pesquisarOnibus(int passageiros) {
+    public ResponseEntity<ArrayList<Veiculo>> pesquisarOnibus(int passageiros) {
         ArrayList<Veiculo> veiculos = new ArrayList<Veiculo>();
         veiculos.addAll( this.veiculoService.getVeiculoByPassageiros(passageiros) );
         return ResponseEntity.ok (veiculos );
@@ -81,45 +81,44 @@ public class LocadoraImplController implements Locadora {
 
     @Override
     public double calcularAluguel(String placa, int dias) throws VeiculoNaoCadastrado {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularAluguel'");
+       return this.veiculoService.getValorTotalAluguel(placa, dias);
     }
 
     @Override
     public void registrarAluguel(String placa, Date data, int dias, int cpf)
             throws VeiculoNaoCadastrado, VeiculoAlugado, ClienteNaoCadastrado {
-        // TODO Auto-generated method stub
+         Veiculo  veiculo = Optional.ofNullable( this.veiculoService.getVeiculoByPlaca(placa) )
+            .orElseThrow( () -> new VeiculoNaoCadastrado() );
         throw new UnsupportedOperationException("Unimplemented method 'registrarAluguel'");
     }
 
     @Override
     public void registrarDevolucao(String placa, Date data, int cpf)
             throws VeiculoNaoCadastrado, VeiculoNaoAlugado, ClienteNaoCadastrado {
-        // TODO Auto-generated method stub
+        Veiculo  veiculo = Optional.ofNullable( this.veiculoService.getVeiculoByPlaca(placa) )
+            .orElseThrow( () -> new VeiculoNaoCadastrado() );
         throw new UnsupportedOperationException("Unimplemented method 'registrarDevolucao'");
     }
 
     @Override
     public void depreciarVeiculos(int tipo, double taxaDepreciacao) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'depreciarVeiculos'");
     }
 
     @Override
     public void aumentarDiaria(int tipo, double taxaAumento) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'aumentarDiaria'");
     }
 
     @Override
     public double faturamentoTotal(int tipo, Date inicio, Date fim) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'faturamentoTotal'");
     }
 
     @Override
     public int quantidadeTotalDeDiarias(int tipo, Date inicio, Date fim) {
-        // TODO Auto-generated method stub
+
         throw new UnsupportedOperationException("Unimplemented method 'quantidadeTotalDeDiarias'");
     }
     

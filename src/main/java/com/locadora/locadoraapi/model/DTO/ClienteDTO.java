@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ClienteDTO(    
     @NotBlank String nome,
-    @NotNull Integer cpf,
+    @NotNull Long cpf,
     String telefone,
     String email
 ) {
