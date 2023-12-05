@@ -47,6 +47,10 @@ public abstract class  Veiculo {
 		return (this.valorDiaria + this.seguro()) * dias;
 	}
 
+    public void aumentarDiaria(double taxaAumento) {
+        this.valorDiaria = this.valorDiaria + (this.valorDiaria * taxaAumento/100);
+    }
+
     public String getMarca() {
         return this.marca;
     }
@@ -106,6 +110,8 @@ public abstract class  Veiculo {
     public void depreciar(double taxaDepreciacao) {
         this.valorDoBem = this.valorDoBem - (this.valorDoBem * taxaDepreciacao/100);
     }
+
+    
 
        
 }

@@ -143,5 +143,14 @@ public class VeiculoService {
         }
         
     }
+
+
+    public void aumentarDiaria(int tipo, double taxaAumento) {
+
+        this.repositorio.findByTipo( TipoCarroEnum.values()[tipo-1]  ).forEach( (veiculo) -> {
+            veiculo.aumentarDiaria(taxaAumento);
+            this.repositorio.save(veiculo);
+        });
+    }
     
 }

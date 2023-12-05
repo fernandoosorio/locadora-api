@@ -107,7 +107,9 @@ public class LocadoraImplController implements Locadora {
 
     @Override
     public void aumentarDiaria(int tipo, double taxaAumento) {
-        throw new UnsupportedOperationException("Unimplemented method 'aumentarDiaria'");
+          if( taxaAumento < 0)
+            throw new IllegalArgumentException("Taxa de Aumento deve ser valor positivo");
+        this.veiculoService.aumentarDiaria(tipo,taxaAumento);
     }
 
     @Override
