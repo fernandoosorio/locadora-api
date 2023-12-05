@@ -18,6 +18,7 @@ import com.locadora.locadoraapi.model.Aluguel;
 import com.locadora.locadoraapi.model.Cliente;
 import com.locadora.locadoraapi.model.Veiculo;
 import com.locadora.locadoraapi.model.helpers.TipoCarroEnum;
+import com.locadora.locadoraapi.model.helpers.TipoVeiculoClassHelper;
 import com.locadora.locadoraapi.repository.AluguelRepository;
 import com.locadora.locadoraapi.repository.ClienteRepository;
 import com.locadora.locadoraapi.repository.VeiculoRepository;
@@ -126,8 +127,6 @@ public class VeiculoService {
 
     public void depreciarVeiculos(int tipo, double taxaDepreciacao) {
 
-       
-
         if(tipo == 0){
             this.repositorio.findAll().forEach( (veiculo) -> {
                 veiculo.depreciar(taxaDepreciacao);
@@ -135,8 +134,7 @@ public class VeiculoService {
             });
 
         }else{
-            TipoCarroEnum tipoCarro = TipoCarroEnum.values()[tipo-1]; // 1 - passeio, 2 - SUV, 3 - pickup, subtrai-se um pois o indice inicia em zero
-            this.repositorio.findByTipo(tipoCarro).forEach( (veiculo) -> {
+             this.repositorio.findAllVeiculosByType(TipoVeiculoClassHelper.getTipoVeiculoClass(tipo)).forEach( (veiculo) -> {
                 veiculo.depreciar(taxaDepreciacao);
                 this.repositorio.save(veiculo);
         });
@@ -147,10 +145,64 @@ public class VeiculoService {
 
     public void aumentarDiaria(int tipo, double taxaAumento) {
 
-        this.repositorio.findByTipo( TipoCarroEnum.values()[tipo-1]  ).forEach( (veiculo) -> {
-            veiculo.aumentarDiaria(taxaAumento);
-            this.repositorio.save(veiculo);
+         if(tipo == 0){
+            this.repositorio.findAll()
+                .forEach( (veiculo) -> {
+                    veiculo.aumentarDiaria(taxaAumento);
+                    this.repositorio.save(veiculo);
+            });
+
+        }else{
+          
+            this.repositorio.findAllVeiculosByType(TipoVeiculoClassHelper.getTipoVeiculoClass(tipo)).forEach( (veiculo) -> {
+                veiculo.aumentarDiaria(taxaAumento);
+                this.repositorio.save(veiculo);
         });
+        }
+
+       
+    }
+
+
+    public double faturamentoTotal(int tipo, Date inicio, Date fim) {
+
+
+        LocalDateTime inicioLocalDateTime = inicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime fimLocalDateTime = fim.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        if(tipo == 0){
+                return this.aluguelRepository.findByDataInicioBetween(inicioLocalDateTime, fimLocalDateTime)
+                    .stream()
+                    .mapToDouble( (aluguel) ->  aluguel.getTotalAluguel() )
+                    .sum();
+
+        }else{
+            return this.aluguelRepository.findByDataInicioBetweenAndVeiculoTipo(inicioLocalDateTime, fimLocalDateTime, TipoVeiculoClassHelper.getTipoVeiculoClass(tipo))
+                .stream()
+                .mapToDouble( (aluguel) -> aluguel.getTotalAluguel() )
+                .sum();
+        }
+       
+       
+    }
+
+
+    public int quantidadeTotalDeDiarias(int tipo, Date inicio, Date fim) {
+        LocalDateTime inicioLocalDateTime = inicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        LocalDateTime fimLocalDateTime = fim.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        
+         if(tipo == 0){
+                return this.aluguelRepository.findByDataInicioBetween(inicioLocalDateTime, fimLocalDateTime)
+                    .stream()
+                    .mapToInt( (aluguel) ->  aluguel.getDias() )
+                    .sum();
+
+        }else{
+            return this.aluguelRepository.findByDataInicioBetweenAndVeiculoTipo(inicioLocalDateTime, fimLocalDateTime, TipoVeiculoClassHelper.getTipoVeiculoClass(tipo))
+                .stream()
+                .mapToInt( (aluguel) -> aluguel.getDias() )
+                .sum();
+        }
     }
     
 }

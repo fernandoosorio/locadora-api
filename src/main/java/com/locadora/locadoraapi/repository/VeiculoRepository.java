@@ -4,6 +4,7 @@ package com.locadora.locadoraapi.repository;
 import java.util.ArrayList;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.locadora.locadoraapi.model.Caminhao;
 import com.locadora.locadoraapi.model.Carro;
@@ -23,5 +24,8 @@ public interface VeiculoRepository  extends JpaRepository<Veiculo, Long>{
     ArrayList<Caminhao> findByCarga(int carga);
 
     ArrayList<Onibus>  findByCapacidadePassageiros(int passageiros);
+
+    @Query(value ="SELECT v FROM Veiculo v where v.class =?1")
+    ArrayList<Veiculo> findAllVeiculosByType(Class<?> classe);
     
 }

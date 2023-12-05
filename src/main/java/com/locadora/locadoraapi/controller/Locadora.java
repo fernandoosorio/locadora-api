@@ -34,19 +34,19 @@ public interface Locadora {
 	@PostMapping("/create/cliente") 
     public ResponseEntity<Cliente> inserir(@RequestBody  ClienteDTO c) throws ClienteJaCadastrado, SQLException;
 
-	@GetMapping("/pesquisar/veiculoByPlaca/{placa}") 
+	@GetMapping("/pesquisar/veiculo-placa/{placa}") 
     public ResponseEntity<Veiculo> pesquisar(@PathVariable String placa) throws VeiculoNaoCadastrado; 
 
-    @GetMapping("/pesquisar/motoByCilindrada/{cilindrada}") 
+    @GetMapping("/pesquisar/moto-por-cilindrada/{cilindrada}") 
     public ResponseEntity< ArrayList<Veiculo> > pesquisarMoto(@PathVariable int cilindrada);
 	// tipo de carro 1 (passeio), 2 (SUV), 3 (pickup)
-    @GetMapping("/pesquisar/carroByTipoCarro/{tipoCarro}") 
+    @GetMapping("/pesquisar/carro-pelo-tipo/{tipoCarro}") 
     public ResponseEntity< ArrayList<Veiculo> > pesquisarCarro(@PathVariable int tipoCarro);
 
-    @GetMapping("/pesquisar/caminhaoByCarga/{carga}") 
+    @GetMapping("/pesquisar/caminhao-por-carga/{carga}") 
     public ResponseEntity< ArrayList<Veiculo> > pesquisarCaminhao(@PathVariable int carga);
 
-    @GetMapping("/pesquisar/onibusByPassageiros/{passageiros}") 
+    @GetMapping("/pesquisar/onibus-por-passageiros/{passageiros}") 
     public ResponseEntity< ArrayList<Veiculo> > pesquisarOnibus(@PathVariable int passageiros);
     
     //Seguro Moto = (valor do bem * 11%)/365
@@ -58,7 +58,9 @@ public interface Locadora {
     public double calcularAluguel(@PathVariable String placa,@PathVariable int dias) throws VeiculoNaoCadastrado;
     
     @PostMapping("create/aluguel/{placa}/{data}/{dias}/{cpf}") 
-    public void registrarAluguel(@PathVariable String placa, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date data,@PathVariable int dias,@PathVariable Long cpf) throws VeiculoNaoCadastrado, VeiculoAlugado, ClienteNaoCadastrado;
+    public void registrarAluguel(@PathVariable String placa, 
+    @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date data,
+    @PathVariable int dias,@PathVariable Long cpf) throws VeiculoNaoCadastrado, VeiculoAlugado, ClienteNaoCadastrado;
    
     @GetMapping("/registrar-devolucao/{placa}/{data}/{cpf}") 
     public void registrarDevolucao(@PathVariable String placa, @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date data,@PathVariable Long cpf) throws VeiculoNaoCadastrado, VeiculoNaoAlugado, ClienteNaoCadastrado;
@@ -66,14 +68,33 @@ public interface Locadora {
 	// tipo de veiculo
 	// 0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)
     @Operation(summary = "Calcula a depreciação de todos os veículos de um determinado tipo", 
-    description = "Calcula a depreciação de todos os veículos de um determinado tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)")
-    @GetMapping("/calcular/depreciarVeiculos/{tipo}/{taxaDepreciacao}") 
+    description = "Calcula a depreciação de todos os veículos de um determinado tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)") 
+    @GetMapping("/calcular/depreciar-veiculos/{tipo}/{taxaDepreciacao}") 
     public void depreciarVeiculos(@PathVariable int tipo,@PathVariable  double taxaDepreciacao);
-    @GetMapping("/calcular/aumentarDiaria/{tipo}/{taxaAumento}") 
+    
+    @Operation(summary = "Calcula o aumento da diária de todos os veículos de um determinado tipo", 
+    description = "Calcula a depreciação de todos os veículos de um determinado tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus)" + 
+    " A taxaAumento é um valor entre 0 e 100, que representa a porcentagem de aumento da diária"
+    )
+    @GetMapping("/calcular/aumentar-diaria/{tipo}/{taxaAumento}") 
     public void aumentarDiaria(@PathVariable int tipo, @PathVariable double taxaAumento);
-    @GetMapping("/calcular/faturamentoTotal/{tipo}/{inicio}/{fim}") 
-    public double faturamentoTotal(@PathVariable  int tipo,@PathVariable Date inicio, @PathVariable Date fim);
-    @GetMapping("/calcular/quantidadeTotalDeDiarias/{tipo}/{inicio}/{fim}") 
-    public int quantidadeTotalDeDiarias(@PathVariable int tipo, @PathVariable  Date inicio, @PathVariable  Date fim);
+    
+    @Operation(summary = "Calcula o faturamento total das diárias de todos os veículos de um determinado tipo", 
+    description = 
+     "Tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus) \n" + 
+     " Formato da data: dd-MM-yyyy HH:mm:ss" )
+    @GetMapping("/calcular/faturamento-total/{tipo}/{inicio}/{fim}") 
+    public double faturamentoTotal(@PathVariable  int tipo,
+    @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date inicio, 
+    @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")Date fim);
+    
+    @Operation(summary = "Calcula o número de dias que determinado tipo de veículos esteve alugado", 
+    description = 
+     "Tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus) \n" + 
+     " Formato da data: dd-MM-yyyy HH:mm:ss" )
+    @GetMapping("/calcular/quantidade-total-diarias/{tipo}/{inicio}/{fim}") 
+    public int quantidadeTotalDeDiarias(@PathVariable int tipo, 
+    @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date inicio, 
+    @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date fim);
     
 }

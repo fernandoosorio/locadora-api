@@ -75,4 +75,11 @@ public class Aluguel {
     public void setBaixo(boolean baixo) {
         this.baixo = baixo;
     }
+
+    public int getDias() {
+        if (this.dataDevolucaoReal == null) {
+            return 0;
+        }
+        return this.dataDevolucaoReal.getDayOfMonth() - this.dataInicio.getDayOfMonth();
+    }
 }

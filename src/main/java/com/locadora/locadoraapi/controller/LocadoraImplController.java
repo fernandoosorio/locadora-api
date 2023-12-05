@@ -102,26 +102,36 @@ public class LocadoraImplController implements Locadora {
     public void depreciarVeiculos(int tipo, double taxaDepreciacao) {
         if( taxaDepreciacao < 0 || taxaDepreciacao > 100)
             throw new IllegalArgumentException("Taxa de depreciacao deve ser entre 0 e 100");
+        if ( tipo < 0 || tipo > 4)
+            throw new IllegalArgumentException("Tipo deve ser entre 0 e 4");
+
         this.veiculoService.depreciarVeiculos(tipo,taxaDepreciacao);
     }
 
     @Override
     public void aumentarDiaria(int tipo, double taxaAumento) {
-          if( taxaAumento < 0)
+        if( taxaAumento < 0)
             throw new IllegalArgumentException("Taxa de Aumento deve ser valor positivo");
+        if ( tipo < 0 || tipo > 4)
+            throw new IllegalArgumentException("Tipo deve ser entre 0 e 4");
         this.veiculoService.aumentarDiaria(tipo,taxaAumento);
     }
 
     @Override
     public double faturamentoTotal(int tipo, Date inicio, Date fim) {
 
-        throw new UnsupportedOperationException("Unimplemented method 'faturamentoTotal'");
+        if ( tipo < 0 || tipo > 4)
+            throw new IllegalArgumentException("Tipo deve ser entre 0 e 4");
+        return this.veiculoService.faturamentoTotal(tipo, inicio, fim);
+
     }
 
     @Override
     public int quantidadeTotalDeDiarias(int tipo, Date inicio, Date fim) {
-
-        throw new UnsupportedOperationException("Unimplemented method 'quantidadeTotalDeDiarias'");
+        if ( tipo < 0 || tipo > 4)
+            throw new IllegalArgumentException("Tipo deve ser entre 0 e 4");
+        return this.veiculoService.quantidadeTotalDeDiarias(tipo, inicio, fim);
+        
     }
     
 }
