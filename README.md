@@ -5,11 +5,11 @@ git clone https://github.com/fernandoosorio/locadora-api
 
 cd locadora-api
 
-Verificar versão do java ( java -version) deve estar na versão 17
+Verificar versão do java ( java --version) deve estar na versão 17
 
-Noo linux para escolher diferentes versões do java é preciso fazer sudo update-alternatives --config java
+No linux para escolher diferentes versões do java é preciso fazer sudo update-alternatives --config java
 
-mvn dependency:resolve  (precisa estar na vesão 17 do Java)
+mvn dependency:resolve  (precisa estar na vesão 17 do Java)  - Para instalar mvn no [windows](https://dicasdeprogramacao.com.br/como-instalar-o-maven-no-windows/)  ou [linux](https://dicasdeprogramacao.com.br/como-instalar-o-maven-no-windows/)
 
 Se tudo ocorreu como esperado: [INFO] BUILD SUCCESS
 
