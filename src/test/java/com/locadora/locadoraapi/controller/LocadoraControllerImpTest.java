@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -47,7 +49,8 @@ public class LocadoraControllerImpTest {
 
     @Test
     void deveRetornarSucesso_QuandoInserirVeiculo() throws Exception {
-        VeiculoDto veiculoDto = new VeiculoDto("Hyundai", "HB-20", 2023, 8000.0, 10, "PIA-9655", null,null,null, TipoCarroEnum.PASSEIO);
+        VeiculoDto veiculoDto = new VeiculoDto("Hyundai", "HB-20", 2023, 8000.0, 10, "PIA-9655", null,null,null, TipoCarroEnum.PASSEIO
+        , LocalDate.now() );
         
         when(veiculoService.inserir(any(Veiculo.class)))
         .thenReturn(new 
@@ -65,7 +68,8 @@ public class LocadoraControllerImpTest {
 
     @Test
     void deveRetornarException_QuandoInserirVeiculoJaCadastrado() throws Exception {
-        VeiculoDto veiculoDto = new VeiculoDto("Hyundai", "HB-20", 2023, 8000.0, 10, "PIA-9655", null,null,null, TipoCarroEnum.PASSEIO);
+        VeiculoDto veiculoDto = new VeiculoDto("Hyundai", "HB-20", 2023, 8000.0, 10, "PIA-9655", null,null,null, TipoCarroEnum.PASSEIO
+        , LocalDate.now());
         
         when(veiculoService.inserir(any(Veiculo.class)))
         .thenThrow( VeiculoJaCadastrado.class);

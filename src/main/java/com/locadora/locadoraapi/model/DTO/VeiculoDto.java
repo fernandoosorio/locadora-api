@@ -1,5 +1,8 @@
 package com.locadora.locadoraapi.model.DTO;
 
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.locadora.locadoraapi.model.Caminhao;
 import com.locadora.locadoraapi.model.Carro;
 import com.locadora.locadoraapi.model.Moto;
@@ -16,7 +19,8 @@ public record VeiculoDto(   String marca,
                             Integer capacidadePassageiros,
                             Integer cilindrada,
                             Integer carga,
-                            TipoCarroEnum tipo
+                            TipoCarroEnum tipo,
+                            @JsonFormat(pattern = "dd-MM-yyyy") LocalDate dataDeFabricacao
                         ) { 
     
     public Veiculo toVeiculo() {
