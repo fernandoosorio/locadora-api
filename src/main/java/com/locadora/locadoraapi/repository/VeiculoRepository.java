@@ -1,7 +1,7 @@
 package com.locadora.locadoraapi.repository;
 
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,16 +16,17 @@ import com.locadora.locadoraapi.model.helpers.TipoCarroEnum;
 public interface VeiculoRepository  extends JpaRepository<Veiculo, Long>{
 
     Veiculo findByPlaca(String placa);
+    boolean existsByPlaca(String placa);
 
-    ArrayList<Moto> findByCilindrada(int cilindrada);
+    List<Moto> findByCilindrada(int cilindrada);
 
-    ArrayList<Carro> findByTipo(TipoCarroEnum tipoCarro);
+    List<Carro> findByTipo(TipoCarroEnum tipoCarro);
 
-    ArrayList<Caminhao> findByCarga(int carga);
+    List<Caminhao> findByCarga(int carga);
 
-    ArrayList<Onibus>  findByCapacidadePassageiros(int passageiros);
+    List<Onibus>  findByCapacidadePassageiros(int passageiros);
 
     @Query(value ="SELECT v FROM Veiculo v where v.class =?1")
-    ArrayList<Veiculo> findAllVeiculosByType(Class<?> classe);
+    List<Veiculo> findAllVeiculosByType(Class<?> classe);
     
 }

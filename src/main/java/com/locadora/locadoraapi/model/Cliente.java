@@ -18,7 +18,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; 
 
-    @Column
+    @Column(columnDefinition = "BIGINT")
     private Long cpf;
     @Column
     private String nome;

@@ -10,7 +10,7 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class  Veiculo {
+public abstract class Veiculo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +42,7 @@ public abstract class  Veiculo {
 
     public abstract double seguro();
 
-	
+	//Retornar o valor total do aluguel do veículo
 	public double aluguel(int dias) {
 		return (this.valorDiaria + this.seguro()) * dias;
 	}

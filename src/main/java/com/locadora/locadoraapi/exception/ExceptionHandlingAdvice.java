@@ -40,7 +40,11 @@ public class ExceptionHandlingAdvice extends ResponseEntityExceptionHandler {
     }
 
     private ResponseEntity<MensagemException> handleException( MensagemException mensagemException, HttpStatus status) {
-        return new ResponseEntity<>( mensagemException, status );
+        if (status != null) {
+            return new ResponseEntity<>( mensagemException, status );
+        } else {
+            throw new IllegalArgumentException("HttpStatus cannot be null");
+        }
     }
     
 }

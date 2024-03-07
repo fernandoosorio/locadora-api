@@ -13,10 +13,12 @@ public interface AluguelRepository  extends JpaRepository<Aluguel, Long>{
 
     Aluguel findFirstByVeiculoPlacaAndBaixoFalse(String placa);
 
-    List<Aluguel> findByDataInicioBetween(LocalDateTime inicioLocalDateTime, LocalDateTime fimLocalDateTime);
+    List<Aluguel> findByDataInicioBetweenAndDataDevolucaoRealNotNullAndBaixoIsTrue(LocalDateTime inicioLocalDateTime, LocalDateTime fimLocalDateTime);
     
     @Query(value ="SELECT a FROM Aluguel a join a.veiculo v  where a.dataInicio between ?1 and ?2  and v.class =?3")
     List<Aluguel> findByDataInicioBetweenAndVeiculoTipo(LocalDateTime inicioLocalDateTime, LocalDateTime fimLocalDateTime,
             Class<?> tipoVeiculoClass);
+
+    List<Aluguel> findByDataInicioBetween(LocalDateTime inicioLocalDateTime, LocalDateTime fimLocalDateTime);
     
 }

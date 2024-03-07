@@ -79,7 +79,7 @@ public interface Locadora {
     @GetMapping("/calcular/aumentar-diaria/{tipo}/{taxaAumento}") 
     public void aumentarDiaria(@PathVariable int tipo, @PathVariable double taxaAumento);
     
-    @Operation(summary = "Calcula o faturamento total das diárias de todos os veículos de um determinado tipo", 
+    @Operation(summary = "Calcula o faturamento total das diárias de todos os veículos de um determinado tipo, devem ser consideradas apenas os alugueis finalizados", 
     description = 
      "Tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus) \n" + 
      " Formato da data: dd-MM-yyyy HH:mm:ss" )
@@ -88,7 +88,7 @@ public interface Locadora {
     @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss") Date inicio, 
     @PathVariable @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")Date fim);
     
-    @Operation(summary = "Calcula o número de dias que determinado tipo de veículos esteve alugado", 
+    @Operation(summary = "Calcula o número de dias que determinado tipo de veículos esteve alugado, dentro de um período informado", 
     description = 
      "Tipo   0 (todos), 1 (moto), 2 (carro), 3 (caminhão), 4 (ônibus) \n" + 
      " Formato da data: dd-MM-yyyy HH:mm:ss" )

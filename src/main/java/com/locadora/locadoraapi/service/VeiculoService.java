@@ -35,7 +35,7 @@ public class VeiculoService {
 
     public Veiculo inserir(Veiculo  veiculo)  throws VeiculoJaCadastrado {
 
-        if( repositorio.findByPlaca(veiculo.getPlaca()) != null)
+        if( repositorio.existsByPlaca(veiculo.getPlaca()))
             throw new VeiculoJaCadastrado();
         
         return repositorio.save(veiculo);
@@ -70,9 +70,7 @@ public class VeiculoService {
 
     public double getValorTotalAluguel(String placa, int dias) {
         Veiculo  veiculo = Optional.ofNullable( this.repositorio.findByPlaca(placa) )
-        .orElseThrow( () -> new VeiculoNaoCadastrado() );
-
-
+            .orElseThrow( () -> new VeiculoNaoCadastrado() );
         return veiculo.aluguel(dias); 
     }
 
@@ -82,7 +80,7 @@ public class VeiculoService {
         .orElseThrow( () -> new VeiculoNaoCadastrado() );
 
         //verificar se o veiculo esta alugado
-        Optional.of(this.aluguelRepository.findFirstByVeiculoPlacaAndBaixoFalse(placa) )
+        Optional.ofNullable(this.aluguelRepository.findFirstByVeiculoPlacaAndBaixoFalse(placa) )
         .ifPresent( (aluguel) -> { throw new VeiculoAlugado();});
 
         Cliente cliente = Optional.ofNullable( this.clienteRepository.findByCpf(cpf) )
@@ -144,14 +142,12 @@ public class VeiculoService {
 
 
     public void aumentarDiaria(int tipo, double taxaAumento) {
-
          if(tipo == 0){
             this.repositorio.findAll()
                 .forEach( (veiculo) -> {
                     veiculo.aumentarDiaria(taxaAumento);
                     this.repositorio.save(veiculo);
             });
-
         }else{
           
             this.repositorio.findAllVeiculosByType(TipoVeiculoClassHelper.getTipoVeiculoClass(tipo)).forEach( (veiculo) -> {
@@ -165,13 +161,10 @@ public class VeiculoService {
 
 
     public double faturamentoTotal(int tipo, Date inicio, Date fim) {
-
-
         LocalDateTime inicioLocalDateTime = inicio.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         LocalDateTime fimLocalDateTime = fim.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-
         if(tipo == 0){
-                return this.aluguelRepository.findByDataInicioBetween(inicioLocalDateTime, fimLocalDateTime)
+                return this.aluguelRepository.findByDataInicioBetweenAndDataDevolucaoRealNotNullAndBaixoIsTrue(inicioLocalDateTime, fimLocalDateTime)
                     .stream()
                     .mapToDouble( (aluguel) ->  aluguel.getTotalAluguel() )
                     .sum();

@@ -16,7 +16,7 @@ public class ClienteService {
 
     public Cliente inserir(Cliente  c) {
 
-        if( repositorio.findByCpf(c.getCpf()) != null)
+        if( repositorio.existsByCpf(c.getCpf()) )
             throw new ClienteJaCadastrado();
         
         return repositorio.save(c);

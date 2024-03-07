@@ -72,6 +72,10 @@ public class Aluguel {
         this.dataDevolucaoReal = devolucao;
     }
 
+    public boolean isBaixo() {
+        return baixo;
+    }
+
     public void setBaixo(boolean baixo) {
         this.baixo = baixo;
     }
